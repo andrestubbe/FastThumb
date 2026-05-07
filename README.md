@@ -62,6 +62,13 @@ FastThumb utilizes native memory-mapping and Shell caching for near-instant extr
 
 ### Maven (JitPack)
 ```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
 <dependencies>
     <dependency>
         <groupId>com.github.andrestubbe</groupId>
@@ -74,6 +81,18 @@ FastThumb utilizes native memory-mapping and Shell caching for near-instant extr
         <version>0.1.0</version>
     </dependency>
 </dependencies>
+```
+
+### Gradle (JitPack)
+```groovy
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.andrestubbe:fastthumb:0.1.0'
+    implementation 'com.github.andrestubbe:fastcore:0.1.0'
+}
 ```
 
 ---

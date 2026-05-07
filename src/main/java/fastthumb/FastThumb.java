@@ -17,14 +17,28 @@ public class FastThumb {
     }
 
     /**
-     * Extracts a thumbnail from the given file path.
+     * Extracts a thumbnail or icon from the given file path.
      * 
      * @param path Full path to the file or directory
      * @param size Requested square size (e.g., 256)
-     * @return BufferedImage containing the thumbnail, or null if failed
+     * @return BufferedImage containing the thumbnail/icon, or null if failed
      */
     public static BufferedImage extract(String path, int size) {
-        int[] pixels = extractNative(path, size);
+        return extract(path, size, false);
+    }
+
+    /**
+     * Extracts ONLY the icon (no thumbnail/preview) from the given file path.
+     */
+    public static BufferedImage extractIcon(String path, int size) {
+        return extract(path, size, true);
+    }
+
+    /**
+     * Core extraction method with icon-only flag.
+     */
+    public static BufferedImage extract(String path, int size, boolean iconOnly) {
+        int[] pixels = extractNative(path, size, iconOnly);
         if (pixels == null) return null;
 
         BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
@@ -34,8 +48,7 @@ public class FastThumb {
     }
 
     /**
-     * Native call to Windows Shell API to get thumbnail pixels.
-     * Returns raw ARGB pixels as an int array.
+     * Native call to Windows Shell API to get thumbnail/icon pixels.
      */
-    private static native int[] extractNative(String path, int size);
+    private static native int[] extractNative(String path, int size, boolean iconOnly);
 }

@@ -10,7 +10,7 @@
 
 extern "C" {
 
-JNIEXPORT jintArray JNICALL Java_fastthumb_FastThumb_extractNative(JNIEnv* env, jclass clazz, jstring jpath, jint jsize) {
+JNIEXPORT jintArray JNICALL Java_fastthumb_FastThumb_extractNative(JNIEnv* env, jclass clazz, jstring jpath, jint jsize, jboolean jiconOnly) {
     // 1. Initialize COM
     HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
     bool comInitialized = SUCCEEDED(hr);
@@ -33,8 +33,17 @@ JNIEXPORT jintArray JNICALL Java_fastthumb_FastThumb_extractNative(JNIEnv* env, 
         SIZE size = { (LONG)jsize, (LONG)jsize };
         HBITMAP hBitmap = NULL;
         
-        // 3. Get Image (SIIGBF_BIGGERSIZEOK | SIIGBF_THUMBNAILONLY)
-        hr = pFactory->GetImage(size, SIIGBF_BIGGERSIZEOK, &hBitmap);
+        // Use flags based on iconOnly
+        WTS_ALPHATYPE alphaType;
+        int flags = SIIGBF_BIGGERSIZEOK;
+        if (jiconOnly) {
+            flags |= SIIGBF_ICONONLY;
+        } else {
+            flags |= SIIGBF_THUMBNAILONLY;
+        }
+        
+        // 3. Get Image
+        hr = pFactory->GetImage(size, (SIIGBF)flags, &hBitmap);
         if (SUCCEEDED(hr)) {
             // 4. Convert HBITMAP to ARGB
             BITMAP bmp;

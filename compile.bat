@@ -1,11 +1,8 @@
 @echo off
 setlocal
 
-set "JAVA_HOME=%JAVA_HOME%"
-if "%JAVA_HOME%"=="" (
-    echo Error: JAVA_HOME is not set.
-    exit /b 1
-)
+set "JAVA_HOME=C:\Program Files\Java\jdk-25"
+call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
 
 if not exist "build" mkdir build
 

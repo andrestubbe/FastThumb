@@ -1,0 +1,11 @@
+target/
+build/
+*.obj
+*.exp
+*.lib
+*.pdb
+.idea/
+.project
+.classpath
+.settings/
+*.log

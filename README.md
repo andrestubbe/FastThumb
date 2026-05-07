@@ -1,61 +1,71 @@
-# FastThumbnail (v0.1.0-Blueprint)
+# 🖼️ FastThumb - High-Performance Shell Image Engine (v0.1.0)
 
-High-performance native Windows 11 thumbnail extraction for Java. This module enables lightning-fast, OS-native folder previews and high-DPI assets using zero-copy JNI integration.
+FastThumb is a lightning-fast native Windows JNI module designed for high-performance extraction of **system thumbnails and icons**. Leveraging the modern `IShellItemImageFactory` COM API, it provides pixel-perfect visual previews for files, folders, videos, and documents directly into Java `BufferedImage` objects.
 
-## Architectural Overview
+---
 
-✅ **1. Native Windows 11 Thumbnails via JNI**
-Windows provides advanced thumbnail generation through Shell COM APIs rather than legacy Win32 functions. The implementation targets the following interfaces:
-- `IShellItem`
-- `IShellItemImageFactory` (Primary interface for high-quality scaling)
-- `IThumbnailCache` (Optional: Integration with system-wide caching)
-- `IExtractImage` (Legacy fallback for older Windows versions)
+## ⚡ Core Features
 
-**Implementation Strategy:**
-By utilizing `SHCreateItemFromParsingName()`, an `IShellItem` is instantiated, followed by:
+- **High-Speed Extraction**: Direct native C++ implementation for minimum latency.
+- **Unified API**: Extract both thumbnails (previews) and high-resolution system icons (up to 256x256+).
+- **Format Support**: Automatically handles images, videos (frames), folders, and document previews.
+- **Memory Efficient**: Optimized ARGB pixel transfer via JNI `int[]` arrays.
+- **FastCore Integrated**: Built-in native library management via the FastJava ecosystem.
 
-```cpp
-IShellItemImageFactory* factory;
-item->QueryInterface(IID_PPV_ARGS(&factory));
-factory->GetImage(size, SIIGBF_RESIZETOFIT, &hBitmap);
+---
+
+## 🚀 Quick Start
+
+### Basic Thumbnail Extraction
+```java
+import fastthumb.FastThumb;
+import java.awt.image.BufferedImage;
+
+// Extract a 256x256 thumbnail
+BufferedImage thumb = FastThumb.extract("C:\\Videos\\demo.mp4", 256);
 ```
 
-This approach ensures parity with Windows Explorer, including:
-- **Dynamic Folder Previews** (Win11 style with content snippets)
-- **Multimedia Thumbnails** (Video, Images, Audio covers)
-- **Document Previews** (PDF, Office, Text)
-- **High-DPI Support** (Native scaling for 256px, 512px, and beyond)
+### High-Quality Icon Extraction
+```java
+// Extract the system icon (no preview)
+BufferedImage icon = FastThumb.extractIcon("C:\\Windows\\explorer.exe", 128);
+```
 
-✅ **2. Directory Icons vs. Thumbnails**
-While `SHGetFileInfoW` or `SHGetStockIconInfo` provide standard folder icons, FastThumbnail prioritizes `IShellItemImageFactory` to deliver the rich, content-aware previews used in modern Windows environments.
+---
 
-✅ **3. Windows 11 Folder Preview Logic**
-FastThumbnail leverages the dynamic Win11 preview generation logic. The Shell API automatically:
-1. Samples the primary files within a directory.
-2. Generates micro-thumbnails for those items.
-3. Composites them into the final folder preview asset.
+## 🛠️ Architecture Blueprint
 
-✅ **4. JNI Integration Pipeline**
-The native bridge is designed to be lightweight and efficient:
-- Initialization via `CoInitializeEx`.
-- Object creation via `SHCreateItemFromParsingName`.
-- Image extraction via `IShellItemImageFactory::GetImage`.
-- Pixel data transfer to Java via `jbyteArray` or `DirectByteBuffer` using GDI+ or `CreateDIBSection`.
+### Java Layer (`fastthumb.FastThumb`)
+The Java layer provides a clean, high-level API. It automatically handles the conversion from native raw ARGB pixels into standard `java.awt.image.BufferedImage` objects, making it compatible with any Swing, JavaFX, or AWT application.
 
-✅ **5. Evaluation of Java-Side Alternatives**
-Traditional approaches like `sun.awt.shell.ShellFolder` are deemed unsuitable for the FastJava ecosystem due to:
-- Performance bottlenecks.
-- Resolution limits (often capped at 32x32 or 48x48).
-- Lack of support for native Win11 folder previews.
+### Native Layer (`FastThumb.cpp`)
+- **API**: Windows Shell COM (`IShellItemImageFactory`).
+- **Pipeline**: `SHCreateItemFromParsingName` -> `GetImage` -> `GetDIBits` -> JNI Transfer.
+- **Threading**: COM initialized in `ApartmentThreaded` mode for Shell compatibility.
 
-## Integration with FastJava Ecosystem
+---
 
-FastThumbnail completes the high-performance visualization pipeline by bridging existing modules:
-- **FastFileIndex**: Provides the source file list.
-- **FastIO**: Delivers high-speed metadata for intelligent lazy loading.
-- **FastImage**: Handles the processed bitmap assets for UI rendering.
+## 📦 Build & Requirements
 
-**Key Features:**
-- **Asynchronous Loading**: Native thumbnail extraction without blocking the UI thread.
-- **Native Caching**: Leveraging the Windows system cache for near-instant retrieval.
-- **60 FPS Performance**: Optimized for smooth scrolling in high-density file lists.
+- **OS**: Windows 10/11 (x64)
+- **JDK**: Java 8 or higher
+- **Build**: Maven (Java) + MSVC (Native)
+
+```bash
+# Build Java module
+mvn install
+
+# Build Native DLL
+compile.bat
+```
+
+---
+
+## 🗺️ Ecosystem Integration
+FastThumb is part of the **FastJava** monorepo:
+- **FastCore**: Required for native loading.
+- **FastFileSearch**: Use FastThumb to show previews in search results.
+- **FastTheme**: Styled UI for displaying visual assets.
+
+---
+*Created by [Antigravity](https://github.com/andrestubbe/FastUI)*

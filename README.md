@@ -1,6 +1,6 @@
 # FastThumb — High-Performance Shell Image Engine for Java
 
-**Lightning-fast native extraction of system thumbnails and icons.**
+**High-performance native Windows 11 thumbnail extraction for Java. Leverages Shell COM APIs (IShellItemImageFactory) for lightning-fast, OS-native folder previews, video thumbnails, and high-DPI assets with zero-copy JNI integration. Part of the FastJava ecosystem.**
 
 [![Build](https://img.shields.io/github/actions/workflow/status/andrestubbe/FastThumb/maven.yml?branch=main)](https://github.com/andrestubbe/FastThumb/actions)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)

@@ -11,7 +11,9 @@
 extern "C" {
 
 JNIEXPORT jintArray JNICALL Java_fastthumb_FastThumb_extractNative(JNIEnv* env, jclass clazz, jstring jpath, jint jsize, jboolean jiconOnly) {
-    CoInitialize(NULL);
+    // 1. Initialize COM (Apartment Threaded is preferred for Shell APIs)
+    HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+    bool shouldUninit = SUCCEEDED(hr);
 
     const char* path = env->GetStringUTFChars(jpath, NULL);
     if (!path) return NULL;
@@ -24,13 +26,21 @@ JNIEXPORT jintArray JNICALL Java_fastthumb_FastThumb_extractNative(JNIEnv* env, 
     jintArray result = NULL;
     IShellItemImageFactory* pFactory = NULL;
     
-    HRESULT hr = SHCreateItemFromParsingName(wpath.data(), NULL, IID_PPV_ARGS(&pFactory));
+    hr = SHCreateItemFromParsingName(wpath.data(), NULL, IID_PPV_ARGS(&pFactory));
     if (SUCCEEDED(hr)) {
         SIZE size = { (LONG)jsize, (LONG)jsize };
         HBITMAP hBitmap = NULL;
         
-        // Use default flags to be as compatible as possible
-        hr = pFactory->GetImage(size, SIIGBF_BIGGERSIZEOK, &hBitmap);
+        int flags = SIIGBF_BIGGERSIZEOK;
+        if (jiconOnly) flags |= SIIGBF_ICONONLY;
+
+        hr = pFactory->GetImage(size, (SIIGBF)flags, &hBitmap);
+        
+        // Automatic fallback to icon if thumbnail fails
+        if (FAILED(hr) && !jiconOnly) {
+            hr = pFactory->GetImage(size, (SIIGBF)(SIIGBF_BIGGERSIZEOK | SIIGBF_ICONONLY), &hBitmap);
+        }
+
         if (SUCCEEDED(hr)) {
             BITMAP bmp;
             GetObject(hBitmap, sizeof(BITMAP), &bmp);
@@ -58,7 +68,7 @@ JNIEXPORT jintArray JNICALL Java_fastthumb_FastThumb_extractNative(JNIEnv* env, 
         pFactory->Release();
     }
 
-    CoUninitialize();
+    if (shouldUninit) CoUninitialize();
     return result;
 }
 

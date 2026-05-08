@@ -48,6 +48,24 @@ public class Demo {
 
 ---
 
+## Supported Formats
+
+FastThumb automatically supports any format that has a registered **Shell Extension** or **Thumbnail Provider** on your Windows system.
+
+| Category | Extensions | Display Type |
+| :--- | :--- | :--- |
+| **Images** | `.jpg`, `.png`, `.bmp`, `.gif`, `.webp`, `.ico` | High-quality preview |
+| **Video** | `.mp4`, `.mkv`, `.avi`, `.mov`, `.wmv` | Frame extract |
+| **Documents** | `.pdf`, `.docx`, `.xlsx`, `.pptx`, `.txt` | First-page preview |
+| **Audio** | `.mp3`, `.flac`, `.m4a`, `.wav` | Album cover art |
+| **System** | `.exe`, `.msi`, `.lnk`, `.bat` | Resource icon |
+| **Folders** | *(Directories)* | Live folder preview |
+
+### How it works
+FastThumb interfaces with the **Windows Shell COM API** (`IShellItemImageFactory`). It queries the system's global thumbnail cache for near-instant retrieval. If no preview is available, it gracefully falls back to the high-resolution system icon defined in the Windows Registry.
+
+---
+
 ## Performance
 
 FastThumb utilizes native memory-mapping and Shell caching for near-instant extraction.

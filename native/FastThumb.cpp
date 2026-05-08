@@ -80,13 +80,6 @@ JNIEXPORT jlong JNICALL Java_fastthumb_FastThumb_getNative(JNIEnv* env, jclass c
         GetDIBits(hdc, hBitmap, 0, h, img->pixels, &bmi, DIB_RGB_COLORS);
         ReleaseDC(NULL, hdc);
         
-        for (int i = 0; i < w * h; i++) {
-            unsigned int pixel = (unsigned int)img->pixels[i];
-            if ((pixel & 0xFF000000) == 0) {
-                img->pixels[i] = (int)(pixel | 0xFF000000);
-            }
-        }
-        
         resultHandle = (jlong)img;
         DeleteObject(hBitmap);
     } else {

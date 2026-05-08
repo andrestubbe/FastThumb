@@ -6,10 +6,10 @@ call "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliar
 
 if not exist "build" mkdir build
 
-echo [+] Compiling FastThumb.cpp...
+echo [+] Compiling fastthumb.cpp...
 cl.exe /LD /EHsc /O2 /I"%JAVA_HOME%\include" /I"%JAVA_HOME%\include\win32" ^
-    native\FastThumb.cpp ^
-    /link /OUT:build\fastthumb.dll /def:native\FastThumb.def shell32.lib user32.lib gdi32.lib ole32.lib
+    native\fastthumb.cpp ^
+    /link /OUT:build\fastthumb.dll shell32.lib user32.lib gdi32.lib ole32.lib
 
 if %ERRORLEVEL% neq 0 (
     echo [-] Compilation failed.

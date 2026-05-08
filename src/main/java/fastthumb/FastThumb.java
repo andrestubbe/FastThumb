@@ -1,54 +1,79 @@
 package fastthumb;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-import java.io.File;
+import fastimage.FastImage;
+import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
- * FastThumb - High-performance Windows Shell Thumbnail Extraction
+ * FastThumb - High-performance Windows Shell Thumbnail Extraction.
+ * Uses IShellItem + IShellItemImageFactory for OS-native previews.
  */
-public class FastThumb {
+public final class FastThumb {
+    
+    // Dedicated STA thread for COM operations (IShellItemImageFactory requires STA)
+    private static final ExecutorService STA_EXECUTOR = Executors.newSingleThreadExecutor(r -> {
+        Thread t = new Thread(r, "FastThumb-STA");
+        t.setDaemon(true);
+        return t;
+    });
+
     static {
         try {
             fastcore.FastCore.loadLibrary("fastthumb");
         } catch (Throwable e) {
-            System.err.println("CRITICAL: FastThumb failed to load native DLL: " + e.getMessage());
+            System.err.println("[FastThumb] CRITICAL: Failed to load native DLL: " + e.getMessage());
         }
     }
 
     /**
-     * Extracts a thumbnail or icon from the given file path.
-     * 
-     * @param path Full path to the file or directory
-     * @param size Requested square size (e.g., 256)
-     * @return BufferedImage containing the thumbnail/icon, or null if failed
+     * Extracts a thumbnail for a single file or folder.
      */
-    public static BufferedImage extract(String path, int size) {
-        return extract(path, size, false);
+    public static FastImage get(Path path, int size) {
+        return get(path.toAbsolutePath().toString(), size, false);
     }
 
     /**
-     * Extracts ONLY the icon (no thumbnail/preview) from the given file path.
+     * Extracts a folder preview (composite thumbnail showing contents).
      */
-    public static BufferedImage extractIcon(String path, int size) {
-        return extract(path, size, true);
+    public static FastImage getFolder(Path folder, int size) {
+        return get(folder.toAbsolutePath().toString(), size, false);
     }
 
     /**
-     * Core extraction method with icon-only flag.
+     * Checks if FastThumb is supported on the current platform (Windows only).
      */
-    public static BufferedImage extract(String path, int size, boolean iconOnly) {
-        int[] pixels = extractNative(path, size, iconOnly);
-        if (pixels == null) return null;
-
-        BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-        int[] imgData = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
-        System.arraycopy(pixels, 0, imgData, 0, pixels.length);
-        return img;
+    public static boolean isSupported() {
+        return System.getProperty("os.name").toLowerCase().contains("win");
     }
 
     /**
-     * Native call to Windows Shell API to get thumbnail/icon pixels.
+     * Legacy support: Extracts a thumbnail/icon as a FastImage.
      */
-    private static native int[] extractNative(String path, int size, boolean iconOnly);
+    public static FastImage extract(String path, int size) {
+        return get(path, size, false);
+    }
+
+    private static FastImage get(String path, int size, boolean iconOnly) {
+        try {
+            return STA_EXECUTOR.submit(() -> {
+                System.out.println("[FastThumb] Requesting thumbnail for: " + path + " (size: " + size + ")");
+                long handle = getNative(path, size, iconOnly);
+                
+                if (handle == 0) {
+                    System.err.println("[FastThumb] Native call returned NULL handle for: " + path);
+                    return null;
+                }
+                
+                System.out.println("[FastThumb] Successfully created native handle: 0x" + Long.toHexString(handle));
+                return FastImage.fromNativeHandle(handle, size, size);
+            }).get();
+        } catch (Exception e) {
+            System.err.println("[FastThumb] Java Exception: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static native long getNative(String path, int size, boolean iconOnly);
 }

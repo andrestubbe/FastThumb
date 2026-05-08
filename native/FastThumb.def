@@ -1,0 +1,3 @@
+LIBRARY fastthumb
+EXPORTS
+    Java_fastthumb_FastThumb_getNative

@@ -1,4 +1,4 @@
-# FastThumb
+﻿# FastThumb
 **Native Windows 11 Thumbnail Extraction for Java (Explorer-Parity, High-DPI, Zero-Copy)**
 
 FastThumb is an ultra-fast, native thumbnail extractor for Windows 10/11. 

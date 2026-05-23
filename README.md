@@ -116,5 +116,11 @@ FastThumb replicates the exact Explorer heuristic:
 - **Java 17+**
 - **FastImage** (Required for zero-copy returns)
 
+[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastThumb/releases/tag/v0.1.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
+[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
+
 ---
 **Made with ⚡ by Andre Stubbe**

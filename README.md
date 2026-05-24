@@ -1,9 +1,14 @@
-﻿# FastThumb
-**Native Windows 11 Thumbnail Extraction for Java (Explorer-Parity, High-DPI, Zero-Copy)**
+﻿# FastThumb v0.1.0 [ALPHA] — Native Thumbnail Extraction for Java
 
-FastThumb is an ultra-fast, native thumbnail extractor for Windows 10/11. 
-It leverages `IShellItem` + `IShellItemImageFactory` — the exact same APIs used by Windows Explorer. 
+**⚡ Native Windows 11 Thumbnail Extraction for Java (Explorer-Parity, High-DPI, Zero-Copy)**
+
+FastThumb is an ultra-fast, native thumbnail extractor for Windows 10/11.
+It leverages `IShellItem` + `IShellItemImageFactory` — the exact same APIs used by Windows Explorer.
 It provides High-DPI thumbnails (up to 512px+), folder previews, video keyframes, and composite thumbnails, perfectly integrated into the FastJava ecosystem.
+
+[![FastKeyboard Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
+
+
 
 ## Features
 
@@ -123,4 +128,19 @@ FastThumb replicates the exact Explorer heuristic:
 [![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
 ---
-**Made with ⚡ by Andre Stubbe**
+
+## License
+MIT License — See [LICENSE](LICENSE) file for details.
+
+---
+
+## Related Projects
+- [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader for Java
+- [FastKeyboard](https://github.com/andrestubbe/FastKeyboard) — High-performance RawInput engine
+- [FastTheme](https://github.com/andrestubbe/FastTheme) — Advanced UI styling engine
+
+---
+**Part of the FastJava Ecosystem** — *Making the JVM faster.*
+
+
+

@@ -25,50 +25,7 @@ It provides High-DPI thumbnails (up to 512px+), folder previews, video keyframes
 
 ---
 
-## Features
-
-- **🖼️ Explorer‑Parity** — Identical thumbnails to Windows Explorer (colors, cropping, DPI, video frames, folder preview logic).
-- **🔍 High‑DPI Support** — 32px → 512px → unbounded. No 48px limitation like Java ShellFolder.
-- **⚡ Zero‑Copy JNI Pipeline** — Native DIB → DirectByteBuffer → FastImage.
-- **🗂️ Folder Preview Logic (Win11)** — Micro‑thumbnails, composite layouts, and content‑sampling.
-- **🎞️ Video & Multimedia** — Keyframes, album art, PDF/Office previews (via Explorer backend).
-- **🧵 STA‑Thread Engine** — COM Thumbnail APIs run in a dedicated STA thread for maximum stability.
-- **🧩 FastJava Integration** — Seamlessly combines with FastIO, FastFileIndex, FastImage, and FastWindow.
-
----
-
-## Java API
-
-```java
-public final class FastThumb {
-    /**
-     * Extracts a thumbnail for a single file or folder.
-     * Returns a FastImage (ARGB, zero-copy).
-     */
-    public static FastImage get(Path path, int size);
-
-    /**
-     * Extracts a folder preview (composite thumbnail showing contents).
-     */
-    public static FastImage getFolder(Path folder, int size);
-
-    /**
-     * Check if FastThumb is supported on the current system.
-     */
-    public static boolean isSupported();
-}
-```
-
-### Returns
-- `FastImage` (ARGB, direct, zero-copy).
-- Guaranteed High-DPI and Explorer-consistent.
-
-### Error Handling
-- Item without thumbnail → `null` (falls back to icon if available).
-- Folder empty → `null`.
-- Not supported → `isSupported() == false`.
-
-## Usage Example
+## Quick Start
 
 ```java
 Path p = Paths.get("C:/Users/Andre/Pictures/IMG_00123.JPG");
@@ -83,6 +40,33 @@ if (img != null) {
 ```java
 FastImage preview = FastThumb.getFolder(Paths.get("C:/Users/Andre/Pictures"), 256);
 ```
+
+---
+
+## Features
+
+- **🖼️ Explorer‑Parity** — Identical thumbnails to Windows Explorer (colors, cropping, DPI, video frames, folder preview logic).
+- **🔍 High‑DPI Support** — 32px → 512px → unbounded. No 48px limitation like Java ShellFolder.
+- **⚡ Zero‑Copy JNI Pipeline** — Native DIB → DirectByteBuffer → FastImage.
+- **🗂️ Folder Preview Logic (Win11)** — Micro‑thumbnails, composite layouts, and content‑sampling.
+- **🎞️ Video & Multimedia** — Keyframes, album art, PDF/Office previews (via Explorer backend).
+- **🧵 STA‑Thread Engine** — COM Thumbnail APIs run in a dedicated STA thread for maximum stability.
+- **🧩 FastJava Integration** — Seamlessly combines with FastIO, FastFileIndex, FastImage, and FastWindow.
+
+---
+
+### Returns
+
+- `FastImage` (ARGB, direct, zero-copy).
+- Guaranteed High-DPI and Explorer-consistent.
+
+### Error Handling
+
+- Item without thumbnail → `null` (falls back to icon if available).
+- Folder empty → `null`.
+- Not supported → `isSupported() == false`.
+
+---
 
 ## Architecture
 
@@ -105,6 +89,8 @@ Native (C++)
 - **Always Explorer-Parity**: Matches the exact Windows look and feel, including video frame overlays and folder contents.
 - **Zero-Copy**: Pixels are written directly into a native buffer that `FastImage` manages. No intermediate `int[]` copies.
 
+---
+
 ## Performance
 
 | Operation | FastThumb | Java ShellFolder | Speedup |
@@ -116,6 +102,8 @@ Native (C++)
 
 *Note: Benchmarks performed on Windows 11, NVMe SSD.*
 
+---
+
 ## Folder Preview Logic (Windows 11)
 
 FastThumb replicates the exact Explorer heuristic:
@@ -124,34 +112,35 @@ FastThumb replicates the exact Explorer heuristic:
 - **Grid Layout**: Automatic 2x2 or 3x3 composite grid for folders.
 - **DPI Awareness**: Renders micro-thumbnails at the appropriate scale.
 
-## Roadmap
+---
 
-- [ ] **IThumbnailCache Integration** — Persistent cache hits for sub-millisecond retrieval.
-- [ ] **Async Batch Extraction** — Non-blocking extraction for large directories.
-- [ ] **Video Keyframe Override** — Custom decoders for specific video offsets.
-- [ ] **DirectStorage Prefetch** — FastIO integration for lightning-fast loading.
-- [ ] **FastUI ThumbnailGrid** — GPU-accelerated component for browsing thousands of items.
+## Documentation
 
-## Requirements
+* **[COMPILE.md](COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
+* **[REFERENCE.md](REFERENCE.md)**: Full API descriptions, border configurations, and codepoint index.
+* **[PHILOSOPHIE.md](PHILOSOPHIE.md)**: The engineering rationale for zero-allocation performance.
+* **[ROADMAP.md](ROADMAP.md)**: Future milestones and planned features.
 
-- **Windows 10/11** (x64)
-- **Java 17+**
-- **FastImage** (Required for zero-copy returns)
+---
 
-[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastThumb/releases/tag/v0.1.0)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
-[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
+## Platform Support
+
+| Platform      | Status            |
+|---------------|-------------------|
+| Windows 10/11 | ✅ Fully Supported |
+| Linux         | 🚧 Planned        |
+| macOS         | 🚧 Planned        |
 
 ---
 
 ## License
+
 MIT License — See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Related Projects
+
 - [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader for Java
 - [FastKeyboard](https://github.com/andrestubbe/FastKeyboard) — High-performance RawInput engine
 - [FastTheme](https://github.com/andrestubbe/FastTheme) — Advanced UI styling engine

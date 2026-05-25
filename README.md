@@ -10,6 +10,15 @@ It provides High-DPI thumbnails (up to 512px+), folder previews, video keyframes
 
 
 
+---
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Features](#features)
+
+---
+
 ## Features
 
 - **Explorer-Parity** — Identical thumbnails to Windows Explorer (colors, cropping, DPI, video frames, folder preview logic).

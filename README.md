@@ -1,5 +1,11 @@
 ﻿# FastThumb v0.1.0 [ALPHA] — Native Thumbnail Extraction for Java
 
+[![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastTween/releases/tag/v0.1.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.java.com)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
+[![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
+
 **⚡ Native Windows 11 Thumbnail Extraction for Java (Explorer-Parity, High-DPI, Zero-Copy)**
 
 FastThumb is an ultra-fast, native thumbnail extractor for Windows 10/11.
@@ -21,13 +27,15 @@ It provides High-DPI thumbnails (up to 512px+), folder previews, video keyframes
 
 ## Features
 
-- **Explorer-Parity** — Identical thumbnails to Windows Explorer (colors, cropping, DPI, video frames, folder preview logic).
-- **High-DPI Support** — 32px → 512px → unbounded. No 48px limitation like Java `ShellFolder`.
-- **Zero-Copy JNI Pipeline** — Native DIB → DirectByteBuffer → FastImage.
-- **Folder Preview Logic (Win11)** — Micro-thumbnails, composite layouts, and content-sampling.
-- **Video & Multimedia** — Keyframes, album art, PDF/Office previews (via Explorer backend).
-- **STA-Thread Engine** — COM Thumbnail APIs run in a dedicated STA thread for maximum stability.
-- **FastJava Integration** — Seamlessly combines with FastIO, FastFileIndex, FastImage, and FastWindow.
+- **🖼️ Explorer‑Parity** — Identical thumbnails to Windows Explorer (colors, cropping, DPI, video frames, folder preview logic).
+- **🔍 High‑DPI Support** — 32px → 512px → unbounded. No 48px limitation like Java ShellFolder.
+- **⚡ Zero‑Copy JNI Pipeline** — Native DIB → DirectByteBuffer → FastImage.
+- **🗂️ Folder Preview Logic (Win11)** — Micro‑thumbnails, composite layouts, and content‑sampling.
+- **🎞️ Video & Multimedia** — Keyframes, album art, PDF/Office previews (via Explorer backend).
+- **🧵 STA‑Thread Engine** — COM Thumbnail APIs run in a dedicated STA thread for maximum stability.
+- **🧩 FastJava Integration** — Seamlessly combines with FastIO, FastFileIndex, FastImage, and FastWindow.
+
+---
 
 ## Java API
 

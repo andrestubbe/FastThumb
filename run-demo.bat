@@ -8,11 +8,11 @@ echo [+] Building FastThumb Native...
 call compile.bat
 
 echo [+] Compiling FastThumb Java...
-call mvn compile -DskipTests
+call mvn -q compile -DskipTests
 
 echo [+] Running Demo...
 cd examples\Demo
-call mvn compile -DskipTests
+call mvn -q compile -DskipTests
 
 :: Build final CP
 set "CP=target\classes"

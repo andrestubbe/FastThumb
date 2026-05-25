@@ -6,15 +6,17 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010+-lightgrey.svg)]()
 [![JitPack](https://img.shields.io/badge/JitPack-ready-green.svg)](https://jitpack.io/#andrestubbe)
 
+---
+
 **⚡ Native Windows 11 Thumbnail Extraction for Java (Explorer-Parity, High-DPI, Zero-Copy)**
 
 FastThumb is an ultra-fast, native thumbnail extractor for Windows 10/11.
 It leverages `IShellItem` + `IShellItemImageFactory` — the exact same APIs used by Windows Explorer.
 It provides High-DPI thumbnails (up to 512px+), folder previews, video keyframes, and composite thumbnails, perfectly integrated into the FastJava ecosystem.
 
+---
+
 [![FastKeyboard Showcase](docs/screenshot.png)](https://www.youtube.com/watch?v=BZsqQl7WqWk)
-
-
 
 ---
 

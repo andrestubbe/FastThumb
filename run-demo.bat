@@ -18,7 +18,7 @@ call mvn -q compile -DskipTests
 set "CP=target\classes"
 set "CP=%CP%;..\..\target\classes"
 set "CP=%CP%;%REPO%\com\github\andrestubbe\fastimage\0.1.0\fastimage-0.1.0.jar"
-set "CP=%CP%;%REPO%\com\github\andrestubbe\fasttheme\0.2.0\fasttheme-0.2.0.jar"
+set "CP=%CP%;%REPO%\com\github\andrestubbe\fasttheme\0.1.0\fasttheme-0.1.0.jar"
 set "CP=%CP%;%REPO%\com\github\andrestubbe\fastcore\0.1.0\fastcore-0.1.0.jar"
 
 set "LIB_PATH=..\..\build;..\..\..\FastImage\build"

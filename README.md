@@ -1,4 +1,4 @@
-﻿# FastThumb v0.1.0 [ALPHA] — Native Thumbnail Extraction for Java
+# FastThumb v0.1.0 [ALPHA] � Native Thumbnail Extraction for Java
 
 [![Status](https://img.shields.io/badge/status-v0.1.0-brightgreen.svg)](https://github.com/andrestubbe/FastTween/releases/tag/v0.1.0)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -8,10 +8,10 @@
 
 ---
 
-**⚡ Native Windows 11 Thumbnail Extraction for Java (Explorer-Parity, High-DPI, Zero-Copy)**
+**? Native Windows 11 Thumbnail Extraction for Java (Explorer-Parity, High-DPI, Zero-Copy)**
 
 FastThumb is an ultra-fast, native thumbnail extractor for Windows 10/11.
-It leverages `IShellItem` + `IShellItemImageFactory` — the exact same APIs used by Windows Explorer.
+It leverages `IShellItem` + `IShellItemImageFactory` � the exact same APIs used by Windows Explorer.
 It provides High-DPI thumbnails (up to 512px+), folder previews, video keyframes, and composite thumbnails, perfectly integrated into the FastJava ecosystem.
 
 ---
@@ -47,13 +47,13 @@ FastImage preview = FastThumb.getFolder(Paths.get("C:/Users/Andre/Pictures"), 25
 
 ## Features
 
-- **🖼️ Explorer‑Parity** — Identical thumbnails to Windows Explorer (colors, cropping, DPI, video frames, folder preview logic).
-- **🔍 High‑DPI Support** — 32px → 512px → unbounded. No 48px limitation like Java ShellFolder.
-- **⚡ Zero‑Copy JNI Pipeline** — Native DIB → DirectByteBuffer → FastImage.
-- **🗂️ Folder Preview Logic (Win11)** — Micro‑thumbnails, composite layouts, and content‑sampling.
-- **🎞️ Video & Multimedia** — Keyframes, album art, PDF/Office previews (via Explorer backend).
-- **🧵 STA‑Thread Engine** — COM Thumbnail APIs run in a dedicated STA thread for maximum stability.
-- **🧩 FastJava Integration** — Seamlessly combines with FastIO, FastFileIndex, FastImage, and FastWindow.
+- **??? Explorer-Parity** � Identical thumbnails to Windows Explorer (colors, cropping, DPI, video frames, folder preview logic).
+- **?? High-DPI Support** � 32px ? 512px ? unbounded. No 48px limitation like Java ShellFolder.
+- **? Zero-Copy JNI Pipeline** � Native DIB ? DirectByteBuffer ? FastImage.
+- **??? Folder Preview Logic (Win11)** � Micro-thumbnails, composite layouts, and content-sampling.
+- **??? Video & Multimedia** � Keyframes, album art, PDF/Office previews (via Explorer backend).
+- **?? STA-Thread Engine** � COM Thumbnail APIs run in a dedicated STA thread for maximum stability.
+- **?? FastJava Integration** � Seamlessly combines with FastIO, FastFileIndex, FastImage, and FastWindow.
 
 ---
 
@@ -64,9 +64,9 @@ FastImage preview = FastThumb.getFolder(Paths.get("C:/Users/Andre/Pictures"), 25
 
 ### Error Handling
 
-- Item without thumbnail → `null` (falls back to icon if available).
-- Folder empty → `null`.
-- Not supported → `isSupported() == false`.
+- Item without thumbnail ? `null` (falls back to icon if available).
+- Folder empty ? `null`.
+- Not supported ? `isSupported() == false`.
 
 ---
 
@@ -74,14 +74,14 @@ FastImage preview = FastThumb.getFolder(Paths.get("C:/Users/Andre/Pictures"), 25
 
 ```text
 Java
- └── FastThumb.get(path, size)
-       ↓ JNI (Zero-Copy)
+ +-- FastThumb.get(path, size)
+       ? JNI (Zero-Copy)
 Native (C++)
- ├── CoInitializeEx(STA) (Dedicated Thread)
- ├── SHCreateItemFromParsingName
- ├── IShellItemImageFactory::GetImage(size)
- ├── HBITMAP → DIB → DirectByteBuffer
- └── return to Java (FastImage)
+ +-- CoInitializeEx(STA) (Dedicated Thread)
+ +-- SHCreateItemFromParsingName
+ +-- IShellItemImageFactory::GetImage(size)
+ +-- HBITMAP ? DIB ? DirectByteBuffer
+ +-- return to Java (FastImage)
 ```
 
 ## Guarantees
@@ -97,10 +97,10 @@ Native (C++)
 
 | Operation | FastThumb | Java ShellFolder | Speedup |
 | :--- | :--- | :--- | :--- |
-| 128px Thumbnail | 0.3 – 1.2 ms | 20 – 40 ms | **~30x** |
-| 256px Thumbnail | 0.5 – 2.0 ms | *Not supported* | **∞** |
-| 512px Thumbnail | 3.0 – 5.0 ms | *Not supported* | **∞** |
-| Folder Preview | 1.0 – 4.0 ms | *Not supported* | **∞** |
+| 128px Thumbnail | 0.3 � 1.2 ms | 20 � 40 ms | **~30x** |
+| 256px Thumbnail | 0.5 � 2.0 ms | *Not supported* | **8** |
+| 512px Thumbnail | 3.0 � 5.0 ms | *Not supported* | **8** |
+| Folder Preview | 1.0 � 4.0 ms | *Not supported* | **8** |
 
 *Note: Benchmarks performed on Windows 11, NVMe SSD.*
 
@@ -120,7 +120,7 @@ FastThumb replicates the exact Explorer heuristic:
 
 * **[COMPILE.md](docs/COMPILE.md)**: Full compilation guide (MSVC C++17 build chain + JNI Setup).
 * **[REFERENCE.md](docs/REFERENCE.md)**: Full API descriptions, border configurations, and codepoint index.
-* **[PHILOSOPHIE.md](docs/PHILOSOPHIE.md)**: The engineering rationale for zero-allocation performance.
+* **[PHILOSOPHY.md](docs/PHILOSOPHY.md)**: The engineering rationale for zero-allocation performance.
 * **[ROADMAP.md](docs/ROADMAP.md)**: Future milestones and planned features.
 
 ---
@@ -129,26 +129,26 @@ FastThumb replicates the exact Explorer heuristic:
 
 | Platform      | Status            |
 |---------------|-------------------|
-| Windows 10/11 | ✅ Fully Supported |
-| Linux         | 🚧 Planned        |
-| macOS         | 🚧 Planned        |
+| Windows 10/11 | ? Fully Supported |
+| Linux         | ?? Planned        |
+| macOS         | ?? Planned        |
 
 ---
 
 ## License
 
-MIT License — See [LICENSE](LICENSE) file for details.
+MIT License � See [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Related Projects
 
-- [FastCore](https://github.com/andrestubbe/FastCore) — Native Library Loader for Java
-- [FastKeyboard](https://github.com/andrestubbe/FastKeyboard) — High-performance RawInput engine
-- [FastTheme](https://github.com/andrestubbe/FastTheme) — Advanced UI styling engine
+- [FastCore](https://github.com/andrestubbe/FastCore) � Native Library Loader for Java
+- [FastKeyboard](https://github.com/andrestubbe/FastKeyboard) � High-performance RawInput engine
+- [FastTheme](https://github.com/andrestubbe/FastTheme) � Advanced UI styling engine
 
 ---
-**Part of the FastJava Ecosystem** — *Making the JVM faster.*
+**Part of the FastJava Ecosystem** � *Making the JVM faster.*
 
 
 

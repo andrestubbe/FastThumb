@@ -23,17 +23,17 @@
     <dependencies>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
-            <artifactId>fastthumb</artifactId>
+            <artifactId>FastThumb</artifactId>
             <version>0.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
-            <artifactId>fasttheme</artifactId>
+            <artifactId>FastTheme</artifactId>
             <version>0.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.andrestubbe</groupId>
-            <artifactId>fastcore</artifactId>
+            <artifactId>FastCore</artifactId>
             <version>0.1.0</version>
         </dependency>
     </dependencies>

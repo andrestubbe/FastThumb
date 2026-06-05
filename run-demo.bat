@@ -1,4 +1,6 @@
 @echo off
+chcp 65001 >nul
+cd /d "%~dp0"
 setlocal
 
 set "JAVA_HOME=C:\Program Files\Java\jdk-25"
@@ -8,11 +10,11 @@ echo [+] Building FastThumb Native...
 call compile.bat
 
 echo [+] Compiling FastThumb Java...
-call mvn -q compile -DskipTests
+call mvn compile -DskipTests
 
 echo [+] Running Demo...
 cd examples\Demo
-call mvn -q compile -DskipTests
+call mvn compile -DskipTests
 
 :: Build final CP
 set "CP=target\classes"

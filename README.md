@@ -20,13 +20,6 @@ It provides High-DPI thumbnails (up to 512px+), folder previews, video keyframes
 
 ---
 
-## Table of Contents
-
-- [Quick Start](#quick-start)
-- [Features](#features)
-
----
-
 ## Quick Start
 
 ```java
@@ -44,6 +37,16 @@ FastImage preview = FastThumb.getFolder(Paths.get("C:/Users/Andre/Pictures"), 25
 ```
 
 ---
+
+---
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Features](#features)
+
+---
+
 
 ## Features
 

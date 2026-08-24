@@ -1,31 +1,15 @@
 @echo off
-chcp 65001 >nul
-cd /d "%~dp0"
 setlocal
+cd /d "%~dp0"
+echo ===================================================
+echo  Building FastThumb & Running Live Demo
+echo ===================================================
 
-set "JAVA_HOME=C:\Program Files\Java\jdk-25"
-set "REPO=%USERPROFILE%\.m2\repository"
+call "C:\Users\andre\tools\apache-maven-3.9.9\bin\mvn.cmd" compile
+if %ERRORLEVEL% NEQ 0 (
+    echo Build failed!
+    exit /b %ERRORLEVEL%
+)
 
-echo [+] Building FastThumb Native...
-call compile.bat
-
-echo [+] Compiling FastThumb Java...
-call mvn compile -DskipTests
-
-echo [+] Running Demo...
-cd examples\Demo
-call mvn compile -DskipTests
-
-:: Build final CP
-set "CP=target\classes"
-set "CP=%CP%;..\..\target\classes"
-set "CP=%CP%;%REPO%\com\github\andrestubbe\fastimage\0.1.0\fastimage-0.1.0.jar"
-set "CP=%CP%;%REPO%\com\github\andrestubbe\fasttheme\0.1.0\fasttheme-0.1.0.jar"
-set "CP=%CP%;%REPO%\com\github\andrestubbe\fastcore\0.1.0\fastcore-0.1.0.jar"
-
-set "LIB_PATH=..\..\build;..\..\..\FastImage\build"
-
-"%JAVA_HOME%\bin\java.exe" "-Djava.library.path=%LIB_PATH%" -cp "%CP%" fastthumb.Demo
-
-cd ..\..
-endlocal
+java -cp "target\classes;examples\Demo\src\main\java;%USERPROFILE%\.m2\repository\com\github\andrestubbe\fastcore\0.1.0\fastcore-0.1.0.jar;%USERPROFILE%\.m2\repository\com\github\andrestubbe\FastBinary\0.1.0\FastBinary-0.1.0.jar;%USERPROFILE%\.m2\repository\com\github\andrestubbe\FastFileFormat\0.1.0\FastFileFormat-0.1.0.jar;%USERPROFILE%\.m2\repository\com\github\andrestubbe\FastImage\0.1.1\FastImage-0.1.1.jar" fastthumb.demo.Demo
+pause

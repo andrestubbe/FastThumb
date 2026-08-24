@@ -1,26 +1,27 @@
-# FastThumb Reference
+# FastThumb Reference Guide
 
-## 1. CPU Feature Model
-*   **AVX2** — detected via CPUID. Enables 32-byte vector ops.
-*   **SSE4.2** — detected via CPUID. 16-byte fallback.
-*   **Fallback rule**: AVX2 → SSE4.2 → scalar.
+## API Overview
 
-## 2. Guarantees
-*   **Zero-Copy**: All operations use `GetPrimitiveArrayCritical` for direct memory access.
-*   **Unaligned Access**: Safe on all byte boundaries.
-*   **Thread-Safety**: All static native methods are thread-safe.
+`fastthumb.FastThumb` provides direct Java bindings to the native Windows Shell Image Factory (`IShellItemImageFactory`) and Windows Shell Thumbnail Cache.
 
-## 3. JNI & Memory Contracts
-*   **Direct Memory Pinning**: No implicit copies are made by the JNI bridge.
-*   **No Allocation**: All operations work on pre-allocated Java arrays or buffers.
-*   **Critical Sections**: Native calls minimize blocking to prevent GC impact.
+### Core Methods
 
-## 4. Platform Support
-| Platform | Status |
-|----------|--------|
-| Windows 10/11 (x64) | ✅ Fully Supported |
+| Method | Return | Description |
+| :--- | :--- | :--- |
+| `FastThumb.get(Path path, int size)` | `FastImage` | Extracts a high-resolution thumbnail or icon for the specified file path. |
+| `FastThumb.getIcon(Path path, int size)` | `FastImage` | Extracts only the filetype shell icon without reading internal file content. |
+| `FastThumb.getFolder(Path folder, int size)` | `FastImage` | Extracts the OS-native folder thumbnail with content fan-out. |
+| `FastThumb.extract(String path, int size)` | `FastImage` | Direct string overload for file paths. |
 
 ---
-**Part of the FastJava Ecosystem** — *Making the JVM faster.*
 
-Made with ⚡ by Andre Stubbe
+## Codec & Binary Serialization
+
+`fastthumb.ThumbCodec` provides serialization of thumbnail metadata records into FastFileFormat `.thumbbin` binaries (Payload ID `0x0008`).
+
+| Method | Return | Description |
+| :--- | :--- | :--- |
+| `ThumbCodec.encode(List<ThumbRecord> records)` | `byte[]` | Encodes records to compressed `.thumbbin` byte array. |
+| `ThumbCodec.decode(byte[] bytes)` | `List<ThumbRecord>` | Deserializes `.thumbbin` payload back to `ThumbRecord` list. |
+| `ThumbCodec.writeToFile(Path path, List<ThumbRecord> records)` | `void` | Writes binary metadata cache directly to disk. |
+| `ThumbCodec.readFromFile(Path path)` | `List<ThumbRecord>` | Reads binary metadata cache from disk. |

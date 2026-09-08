@@ -12,6 +12,8 @@
 
 **FastThumb** delivers Windows Explorer parity for Java applications. Utilizing the native Windows `IShellItemImageFactory` and Windows Shell Thumbnail Cache over dedicated Single-Threaded Apartment (STA) execution, it extracts full-fidelity previews for PDFs, Images, Videos, Office documents, and executables with zero Swing/AWT overhead.
 
+Watch Demo (YouTube) | Watch JMH Benchmark (YouTube)
+
 ---
 
 ## Quick Start
